@@ -1,7 +1,8 @@
 <?php
 /*
 Plugin Name: REST API Search
-Description: Adding in the missing search functionality of all post types to the REST API v2 plugin.
+Plugin URI:  https://github.com/KCPT19/REST-API-Search
+Description: Adds in the missing search functionality of all post types to the REST API v2 plugin.
 Version:     1.0
 Author:      KCPT
 Author URI:  https://github.com/orgs/KCPT19
