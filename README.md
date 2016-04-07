@@ -11,7 +11,7 @@ The issue being with the current REST API Version 2, you can only search on a pe
 
 ### What this plugin does. ###
 
-**Adds the search functionality for all posts types:**
+**Adds the search functionality for all posts types except revisions and types with 'exclude_from_search' set to true.**
 
     /wp-json/wp/v2/search/apples
 
@@ -30,5 +30,3 @@ page 2:
 page 3:
 
     /wp-json/wp/v2/search/apples+pears/3
-
-
