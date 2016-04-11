@@ -3,7 +3,7 @@
 Plugin Name: REST API Search
 Plugin URI:  https://github.com/KCPT19/REST-API-Search
 Description: Adds in the missing search functionality of all post types to the REST API v2 plugin.
-Version:     1.0
+Version:     1.1
 Author:      KCPT
 Author URI:  https://github.com/orgs/KCPT19
 License:     GPL2
@@ -23,7 +23,7 @@ class REST_API_Search
         add_action( 'rest_api_init', array( $this, 'restAPI' ), 100 );
 
     }
-    
+
     public function restAPI()
     {
 

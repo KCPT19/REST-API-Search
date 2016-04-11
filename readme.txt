@@ -4,7 +4,7 @@ Donate link: https://kcpt.org/donate/
 Tags: REST API, REST API Search, API Search, Search
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,7 @@ This adds the missing functionality of Search into the WordPress REST API.
 == Description ==
 
 # REST API Search #
+## This is only for Version 2 of the REST API Plugin ##
 
 This adds the missing functionality of Search into the WordPress REST API.
 The issue being with the current REST API Version 2, you can only search on a per post_type basis.
@@ -66,3 +67,6 @@ After the search/ you put any keywords you're searching for, replaces spaces wit
 = 1.0 =
 * Initial Version
 * Fully working version which searches all post types except revisions and types with 'exclude_from_search' set to true.
+
+= 1.1 =
+* Restructured code to allow for custom fields added in by other plugins
