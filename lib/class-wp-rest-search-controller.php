@@ -7,7 +7,7 @@ class WP_REST_Search_Controller extends WP_REST_Controller
 
     private static $instance;
 
-    private        $namespace             = 'wp/v2';
+    protected      $namespace             = 'wp/v2';
 
     private        $base                  = 'search';
 
@@ -34,110 +34,111 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         return self::$instance;
     }
 
-    public function get_item_schema() {
+    public function get_item_schema ()
+    {
 
-        $base = $this->get_post_type_base( $this->post_type );
-        $schema = array(
+        $base   = $this->get_post_type_base ( $this->post_type );
+        $schema = array (
             '$schema'    => 'http://json-schema.org/draft-04/schema#',
             'title'      => $this->post_type,
             'type'       => 'object',
             /*
              * Base properties for every Post.
              */
-            'properties' => array(
-                'date'            => array(
+            'properties' => array (
+                'date'         => array (
                     'description' => "The date the object was published, in the site's timezone.",
                     'type'        => 'string',
                     'format'      => 'date-time',
-                    'context'     => array( 'view', 'edit', 'embed' ),
+                    'context'     => array ( 'view', 'edit', 'embed' ),
                 ),
-                'date_gmt'        => array(
+                'date_gmt'     => array (
                     'description' => 'The date the object was published, as GMT.',
                     'type'        => 'string',
                     'format'      => 'date-time',
-                    'context'     => array( 'view', 'edit' ),
+                    'context'     => array ( 'view', 'edit' ),
                 ),
-                'guid'            => array(
+                'guid'         => array (
                     'description' => 'The globally unique identifier for the object.',
                     'type'        => 'object',
-                    'context'     => array( 'view', 'edit' ),
+                    'context'     => array ( 'view', 'edit' ),
                     'readonly'    => true,
-                    'properties'  => array(
-                        'raw'      => array(
+                    'properties'  => array (
+                        'raw'      => array (
                             'description' => 'GUID for the object, as it exists in the database.',
                             'type'        => 'string',
-                            'context'     => array( 'edit' ),
+                            'context'     => array ( 'edit' ),
                         ),
-                        'rendered' => array(
+                        'rendered' => array (
                             'description' => 'GUID for the object, transformed for display.',
                             'type'        => 'string',
-                            'context'     => array( 'view', 'edit' ),
+                            'context'     => array ( 'view', 'edit' ),
                         ),
                     ),
                 ),
-                'id'              => array(
+                'id'           => array (
                     'description' => 'Unique identifier for the object.',
                     'type'        => 'integer',
-                    'context'     => array( 'view', 'edit', 'embed' ),
+                    'context'     => array ( 'view', 'edit', 'embed' ),
                     'readonly'    => true,
                 ),
-                'link'            => array(
+                'link'         => array (
                     'description' => 'URL to the object.',
                     'type'        => 'string',
                     'format'      => 'uri',
-                    'context'     => array( 'view', 'edit', 'embed' ),
+                    'context'     => array ( 'view', 'edit', 'embed' ),
                     'readonly'    => true,
                 ),
-                'modified'        => array(
+                'modified'     => array (
                     'description' => "The date the object was last modified, in the site's timezone.",
                     'type'        => 'string',
                     'format'      => 'date-time',
-                    'context'     => array( 'view', 'edit' ),
+                    'context'     => array ( 'view', 'edit' ),
                 ),
-                'modified_gmt'    => array(
+                'modified_gmt' => array (
                     'description' => 'The date the object was last modified, as GMT.',
                     'type'        => 'string',
                     'format'      => 'date-time',
-                    'context'     => array( 'view', 'edit' ),
+                    'context'     => array ( 'view', 'edit' ),
                 ),
-                'password'        => array(
+                'password'     => array (
                     'description' => 'A password to protect access to the post.',
                     'type'        => 'string',
-                    'context'     => array( 'edit' ),
+                    'context'     => array ( 'edit' ),
                 ),
-                'slug'            => array(
+                'slug'         => array (
                     'description' => 'An alphanumeric identifier for the object unique to its type.',
                     'type'        => 'string',
-                    'context'     => array( 'view', 'edit', 'embed' ),
-                    'arg_options' => array(
+                    'context'     => array ( 'view', 'edit', 'embed' ),
+                    'arg_options' => array (
                         'sanitize_callback' => 'sanitize_title',
                     ),
                 ),
-                'status'          => array(
+                'status'       => array (
                     'description' => 'A named status for the object.',
                     'type'        => 'string',
-                    'enum'        => array_keys( get_post_stati( array( 'internal' => false ) ) ),
-                    'context'     => array( 'edit' ),
+                    'enum'        => array_keys ( get_post_stati ( array ( 'internal' => false ) ) ),
+                    'context'     => array ( 'edit' ),
                 ),
-                'type'            => array(
+                'type'         => array (
                     'description' => 'Type of Post for the object.',
                     'type'        => 'string',
-                    'context'     => array( 'view', 'edit', 'embed' ),
+                    'context'     => array ( 'view', 'edit', 'embed' ),
                     'readonly'    => true,
                 ),
             ),
         );
 
-        $post_type_obj = get_post_type_object( $this->post_type );
+        $post_type_obj = get_post_type_object ( $this->post_type );
         if ( $post_type_obj->hierarchical ) {
-            $schema['properties']['parent'] = array(
+            $schema[ 'properties' ][ 'parent' ] = array (
                 'description' => 'The ID for the parent of the object.',
                 'type'        => 'integer',
-                'context'     => array( 'view', 'edit' ),
+                'context'     => array ( 'view', 'edit' ),
             );
         }
 
-        $post_type_attributes = array(
+        $post_type_attributes = array (
             'title',
             'editor',
             'author',
@@ -148,8 +149,8 @@ class WP_REST_Search_Controller extends WP_REST_Controller
             'page-attributes',
             'post-formats',
         );
-        $fixed_schemas = array(
-            'post' => array(
+        $fixed_schemas        = array (
+            'post'       => array (
                 'title',
                 'editor',
                 'author',
@@ -159,7 +160,7 @@ class WP_REST_Search_Controller extends WP_REST_Controller
                 'revisions',
                 'post-formats',
             ),
-            'page' => array(
+            'page'       => array (
                 'title',
                 'editor',
                 'author',
@@ -169,7 +170,7 @@ class WP_REST_Search_Controller extends WP_REST_Controller
                 'revisions',
                 'page-attributes',
             ),
-            'attachment' => array(
+            'attachment' => array (
                 'title',
                 'author',
                 'comments',
@@ -177,119 +178,123 @@ class WP_REST_Search_Controller extends WP_REST_Controller
             ),
         );
         foreach ( $post_type_attributes as $attribute ) {
-            if ( isset( $fixed_schemas[ $this->post_type ] ) && ! in_array( $attribute, $fixed_schemas[ $this->post_type ] ) ) {
+            if ( isset( $fixed_schemas[ $this->post_type ] ) && ! in_array ( $attribute,
+                    $fixed_schemas[ $this->post_type ] )
+            ) {
                 continue;
-            } elseif ( ! in_array( $this->post_type, array_keys( $fixed_schemas ) ) && ! post_type_supports( $this->post_type, $attribute ) ) {
+            } elseif ( ! in_array ( $this->post_type,
+                    array_keys ( $fixed_schemas ) ) && ! post_type_supports ( $this->post_type, $attribute )
+            ) {
                 continue;
             }
 
             switch ( $attribute ) {
 
                 case 'title':
-                    $schema['properties']['title'] = array(
+                    $schema[ 'properties' ][ 'title' ] = array (
                         'description' => 'The title for the object.',
                         'type'        => 'object',
-                        'context'     => array( 'view', 'edit', 'embed' ),
-                        'properties'  => array(
-                            'raw' => array(
+                        'context'     => array ( 'view', 'edit', 'embed' ),
+                        'properties'  => array (
+                            'raw'      => array (
                                 'description' => 'Title for the object, as it exists in the database.',
                                 'type'        => 'string',
-                                'context'     => array( 'edit' ),
+                                'context'     => array ( 'edit' ),
                             ),
-                            'rendered' => array(
+                            'rendered' => array (
                                 'description' => 'Title for the object, transformed for display.',
                                 'type'        => 'string',
-                                'context'     => array( 'view', 'edit', 'embed' ),
+                                'context'     => array ( 'view', 'edit', 'embed' ),
                             ),
                         ),
                     );
                     break;
 
                 case 'editor':
-                    $schema['properties']['content'] = array(
+                    $schema[ 'properties' ][ 'content' ] = array (
                         'description' => 'The content for the object.',
                         'type'        => 'object',
-                        'context'     => array( 'view', 'edit' ),
-                        'properties'  => array(
-                            'raw' => array(
+                        'context'     => array ( 'view', 'edit' ),
+                        'properties'  => array (
+                            'raw'      => array (
                                 'description' => 'Content for the object, as it exists in the database.',
                                 'type'        => 'string',
-                                'context'     => array( 'edit' ),
+                                'context'     => array ( 'edit' ),
                             ),
-                            'rendered' => array(
+                            'rendered' => array (
                                 'description' => 'Content for the object, transformed for display.',
                                 'type'        => 'string',
-                                'context'     => array( 'view', 'edit' ),
+                                'context'     => array ( 'view', 'edit' ),
                             ),
                         ),
                     );
                     break;
 
                 case 'author':
-                    $schema['properties']['author'] = array(
+                    $schema[ 'properties' ][ 'author' ] = array (
                         'description' => 'The ID for the author of the object.',
                         'type'        => 'integer',
-                        'context'     => array( 'view', 'edit', 'embed' ),
+                        'context'     => array ( 'view', 'edit', 'embed' ),
                     );
                     break;
 
                 case 'excerpt':
-                    $schema['properties']['excerpt'] = array(
+                    $schema[ 'properties' ][ 'excerpt' ] = array (
                         'description' => 'The excerpt for the object.',
                         'type'        => 'object',
-                        'context'     => array( 'view', 'edit', 'embed' ),
-                        'properties'  => array(
-                            'raw' => array(
+                        'context'     => array ( 'view', 'edit', 'embed' ),
+                        'properties'  => array (
+                            'raw'      => array (
                                 'description' => 'Excerpt for the object, as it exists in the database.',
                                 'type'        => 'string',
-                                'context'     => array( 'edit' ),
+                                'context'     => array ( 'edit' ),
                             ),
-                            'rendered' => array(
+                            'rendered' => array (
                                 'description' => 'Excerpt for the object, transformed for display.',
                                 'type'        => 'string',
-                                'context'     => array( 'view', 'edit', 'embed' ),
+                                'context'     => array ( 'view', 'edit', 'embed' ),
                             ),
                         ),
                     );
                     break;
 
                 case 'thumbnail':
-                    $schema['properties']['featured_image'] = array(
+                    $schema[ 'properties' ][ 'featured_image' ] = array (
                         'description' => 'ID of the featured image for the object.',
                         'type'        => 'integer',
-                        'context'     => array( 'view', 'edit' ),
+                        'context'     => array ( 'view', 'edit' ),
                     );
                     break;
 
                 case 'comments':
-                    $schema['properties']['comment_status'] = array(
+                    $schema[ 'properties' ][ 'comment_status' ] = array (
                         'description' => 'Whether or not comments are open on the object.',
                         'type'        => 'string',
-                        'enum'        => array( 'open', 'closed' ),
-                        'context'     => array( 'view', 'edit' ),
+                        'enum'        => array ( 'open', 'closed' ),
+                        'context'     => array ( 'view', 'edit' ),
                     );
-                    $schema['properties']['ping_status'] = array(
+                    $schema[ 'properties' ][ 'ping_status' ]    = array (
                         'description' => 'Whether or not the object can be pinged.',
                         'type'        => 'string',
-                        'enum'        => array( 'open', 'closed' ),
-                        'context'     => array( 'view', 'edit' ),
+                        'enum'        => array ( 'open', 'closed' ),
+                        'context'     => array ( 'view', 'edit' ),
                     );
                     break;
 
                 case 'page-attributes':
-                    $schema['properties']['menu_order'] = array(
+                    $schema[ 'properties' ][ 'menu_order' ] = array (
                         'description' => 'The order of the object in relation to other object of its type.',
                         'type'        => 'integer',
-                        'context'     => array( 'view', 'edit' ),
+                        'context'     => array ( 'view', 'edit' ),
                     );
                     break;
 
                 case 'post-formats':
-                    $schema['properties']['format'] = array(
+                    $schema[ 'properties' ][ 'format' ] = array (
                         'description' => 'The format for the object.',
                         'type'        => 'string',
-                        'enum'        => array_values( get_post_format_slugs() ),
-                        'context'     => array( 'view', 'edit' ),
+                        'enum'        => array_values ( get_post_format_slugs () ),
+                        'context'     => array ( 'view', 'edit' ),
                     );
                     break;
 
@@ -297,23 +302,23 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         }
 
         if ( 'post' === $this->post_type ) {
-            $schema['properties']['sticky'] = array(
+            $schema[ 'properties' ][ 'sticky' ] = array (
                 'description' => 'Whether or not the object should be treated as sticky.',
                 'type'        => 'boolean',
-                'context'     => array( 'view', 'edit' ),
+                'context'     => array ( 'view', 'edit' ),
             );
         }
 
         if ( 'page' === $this->post_type ) {
-            $schema['properties']['template'] = array(
+            $schema[ 'properties' ][ 'template' ] = array (
                 'description' => 'The theme file to use to display the object.',
                 'type'        => 'string',
-                'enum'        => array_keys( wp_get_theme()->get_page_templates() ),
-                'context'     => array( 'view', 'edit' ),
+                'enum'        => array_keys ( wp_get_theme ()->get_page_templates () ),
+                'context'     => array ( 'view', 'edit' ),
             );
         }
 
-        return $this->add_additional_fields_schema( $schema );
+        return $this->add_additional_fields_schema ( $schema );
     }
 
     public function get_items ( $request )
@@ -336,7 +341,7 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         $query = new WP_Query();
 
         $items = $query->query ( array (
-            'paged'           => $page,
+            'paged'          => $page,
             'post_type'      => 'any',
             'posts_per_page' => 10,
             's'              => $search
@@ -378,13 +383,15 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         return mysql_to_rfc3339 ( $date_gmt );
     }
 
-    protected function prepare_excerpt_response( $excerpt ) {
-        if ( post_password_required() ) {
-            return __( 'There is no excerpt because this is a protected post.' );
+    protected function prepare_excerpt_response ( $excerpt )
+    {
+
+        if ( post_password_required () ) {
+            return __ ( 'There is no excerpt because this is a protected post.' );
         }
 
         /** This filter is documented in wp-includes/post-template.php */
-        $excerpt = apply_filters( 'the_excerpt', apply_filters( 'get_the_excerpt', $excerpt ) );
+        $excerpt = apply_filters ( 'the_excerpt', apply_filters ( 'get_the_excerpt', $excerpt ) );
 
         if ( empty( $excerpt ) ) {
             return '';
