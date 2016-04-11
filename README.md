@@ -1,4 +1,5 @@
 # REST API Search #
+## This is only for Version 2 of the REST API Plugin ##
 
 This adds the missing functionality of Search into the WordPress REST API.
 The issue being with the current REST API Version 2, you can only search on a per post_type basis.
