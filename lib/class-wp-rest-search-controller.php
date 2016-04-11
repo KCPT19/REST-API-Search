@@ -336,7 +336,7 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         $query = new WP_Query();
 
         $items = $query->query ( array (
-            'page'           => $page,
+            'paged'           => $page,
             'post_type'      => 'any',
             'posts_per_page' => 10,
             's'              => $search
