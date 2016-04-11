@@ -4,7 +4,7 @@ Donate link: https://kcpt.org/donate/
 Tags: REST API, REST API Search, API Search, Search
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,3 +70,6 @@ After the search/ you put any keywords you're searching for, replaces spaces wit
 
 = 1.1 =
 * Restructured code to allow for custom fields added in by other plugins
+
+= 1.2 =
+* Bug Fix - namespace variable of class needs to be protected.
