@@ -334,11 +334,11 @@ class WP_REST_Search_Controller extends WP_REST_Controller
             $page = 1;
         }
 
-        $page = intval ( $page );
-
+        $page   = intval ( $page );
         $search = implode ( ' ', explode ( "+", $search ) );
-
-        $query = new WP_Query();
+        $search = urldecode ( $search );
+        
+        $query  = new WP_Query();
 
         $items = $query->query ( array (
             'paged'          => $page,
@@ -533,16 +533,17 @@ class WP_REST_Search_Controller extends WP_REST_Controller
     public function register_routes ()
     {
 
-        register_rest_route ( $this->namespace, '/' . $this->base . '/(?P<search>[a-zA-Z+]*)[/]*(?P<page>\d*)', array (
-            'methods'  => WP_REST_Server::READABLE,
-            'callback' => array ( $this, 'get_items' ),
-            'args'     => array (
-                'class' => array (
-                    'default' => 'col-md-4'
+        register_rest_route ( $this->namespace, '/' . $this->base . '/(?P<search>[a-zA-Z0-9\%+]*)[/]*(?P<page>\d*)',
+            array (
+                'methods'  => WP_REST_Server::READABLE,
+                'callback' => array ( $this, 'get_items' ),
+                'args'     => array (
+                    'class' => array (
+                        'default' => 'col-md-4'
+                    ),
+                    's'     => false
                 ),
-                's'     => false
-            ),
-        ) );
+            ) );
 
     }
 
