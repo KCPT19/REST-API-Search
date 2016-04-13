@@ -329,6 +329,10 @@ class WP_REST_Search_Controller extends WP_REST_Controller
 
         $search = $request->get_param ( 'search' );
         $page   = $request->get_param ( 'page' );
+        $postsPerPage = get_option('posts_per_page');
+
+        if( ! $postsPerPage )
+            $postsPerPage = 10;
 
         if ( empty( $page ) ) {
             $page = 1;
@@ -337,13 +341,13 @@ class WP_REST_Search_Controller extends WP_REST_Controller
         $page   = intval ( $page );
         $search = implode ( ' ', explode ( "+", $search ) );
         $search = urldecode ( $search );
-        
+
         $query  = new WP_Query();
 
         $items = $query->query ( array (
             'paged'          => $page,
             'post_type'      => 'any',
-            'posts_per_page' => 10,
+            'posts_per_page' => $postsPerPage,
             's'              => $search
         ) );
 
