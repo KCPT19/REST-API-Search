@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: KCPT
+Contributors: KCPT, Fastmover
 Donate link: https://kcpt.org/donate/
 Tags: REST API, REST API Search, API Search, Search
 Requires at least: 4.4
